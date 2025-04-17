@@ -1,0 +1,2132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MubinOFF - ваш надежный магазин и мастерская электроники. Продажа и ремонт смартфонов, ноутбуков, планшетов и аксессуаров.">
+    <meta name="keywords" content="электроника, ремонт телефонов, продажа ноутбуков, MubinOFF">
+    <title>MubinOFF</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.light-theme {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        body.dark-theme {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-button {
+            position: relative;
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .light-theme .nav-button:hover,
+        .light-theme .nav-button:focus {
+            color: #007bff;
+        }
+
+        .dark-theme .nav-button:hover,
+        .dark-theme .nav-button:focus {
+            color: #66b3ff;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #333;
+            min-width: 150px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .light-theme .dropdown {
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .dropdown button {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            background: none;
+            border: none;
+            color: inherit;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .light-theme .dropdown button:hover,
+        .light-theme .dropdown button:focus {
+            background-color: #f0f0f0;
+        }
+
+        .dark-theme .dropdown button:hover,
+        .dark-theme .dropdown button:focus {
+            background-color: #444;
+        }
+
+        .nav-button:hover .dropdown,
+        .nav-button:focus-within .dropdown {
+            display: block;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .light-theme .theme-toggle {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .dark-theme .theme-toggle {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .light-theme .modal-content {
+            background-color: #fff;
+            color: #333;
+        }
+
+        .dark-theme .modal-content {
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .phone-brands,
+        .laptop-brands,
+        .tablet-brands,
+        .headphone-brands {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .phone-brands button,
+        .laptop-brands button,
+        .tablet-brands button,
+        .headphone-brands button {
+            padding: 0.5rem 1rem;
+            background: none;
+            border: 1px solid;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .light-theme .phone-brands button,
+        .light-theme .laptop-brands button,
+        .light-theme .tablet-brands button,
+        .light-theme .headphone-brands button {
+            border-color: #333;
+        }
+
+        .dark-theme .phone-brands button,
+        .dark-theme .laptop-brands button,
+        .dark-theme .tablet-brands button,
+        .dark-theme .headphone-brands button {
+            border-color: #e0e0e0;
+        }
+
+        .light-theme .phone-brands button:hover,
+        .light-theme .laptop-brands button:hover,
+        .light-theme .tablet-brands button:hover,
+        .light-theme .headphone-brands button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .dark-theme .phone-brands button:hover,
+        .dark-theme .laptop-brands button:hover,
+        .dark-theme .tablet-brands button:hover,
+        .dark-theme .headphone-brands button:hover {
+            background-color: #444;
+        }
+
+        .review-button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+            z-index: 100;
+        }
+
+        .dark-theme .review-button {
+            background-color: #66b3ff;
+        }
+
+        .review-button:hover {
+            background-color: #0056b3;
+        }
+
+        .dark-theme .review-button:hover {
+            background-color: #99ccff;
+        }
+
+        .review-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .review-form input,
+        .review-form textarea {
+            padding: 0.5rem;
+            border: 1px solid;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .light-theme .review-form input,
+        .light-theme .review-form textarea {
+            border-color: #333;
+            background-color: #fff;
+            color: #333;
+        }
+
+        .dark-theme .review-form input,
+        .dark-theme .review-form textarea {
+            border-color: #e0e0e0;
+            background-color: #333;
+            color: #e0e0e0;
+        }
+
+        .review-form button {
+            padding: 0.5rem;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dark-theme .review-form button {
+            background-color: #66b3ff;
+        }
+
+        .review-form button:hover {
+            background-color: #0056b3;
+        }
+
+        .dark-theme .review-form button:hover {
+            background-color: #99ccff;
+        }
+
+        .reviews-list {
+            margin-top: 1rem;
+        }
+
+        .reviews-list div {
+            padding: 0.5rem;
+            border-bottom: 1px solid;
+            margin-bottom: 0.5rem;
+        }
+
+        .light-theme .reviews-list div {
+            border-color: #ddd;
+        }
+
+        .dark-theme .reviews-list div {
+            border-color: #444;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 0.5rem;
+            text-align: left;
+            border: 1px solid;
+        }
+
+        .light-theme th,
+        .light-theme td {
+            border-color: #ddd;
+        }
+
+        .dark-theme th,
+        .dark-theme td {
+            border-color: #444;
+        }
+
+        .light-theme th {
+            background-color: #f0f0f0;
+        }
+
+        .dark-theme th {
+            background-color: #333;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            min-height: calc(100vh - 200px);
+        }
+
+        .welcome-section {
+            text-align: center;
+            padding: 2rem;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .welcome-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-section p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 1rem;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .feature-card {
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+            padding: 1.5rem;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .light-theme .feature-card {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-theme .feature-card {
+            background-color: #333;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .light-theme footer {
+            background-color: #e0e0e0;
+        }
+
+        .dark-theme footer {
+            background-color: #333;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        footer .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        footer .telegram-link,
+        footer .phone-link {
+            font-size: 1.5rem;
+            transition: color 0.3s;
+            text-decoration: none;
+        }
+
+        .light-theme .telegram-link,
+        .light-theme .phone-link {
+            color: #007bff;
+        }
+
+        .dark-theme .telegram-link,
+        .dark-theme .phone-link {
+            color: #66b3ff;
+        }
+
+        .light-theme .telegram-link:hover,
+        .light-theme .phone-link:hover {
+            color: #0056b3;
+        }
+
+        .dark-theme .telegram-link:hover,
+        .dark-theme .phone-link:hover {
+            color: #99ccff;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-button {
+                width: 100%;
+                text-align: center;
+            }
+
+            .dropdown {
+                position: static;
+                width: 100%;
+            }
+
+            .modal-content {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body class="light-theme">
+    <button class="theme-toggle" onclick="toggleTheme()">Темная тема</button>
+    <div class="review-button" onclick="openModal('review-form')">
+        <i class="fas fa-star"></i>
+    </div>
+    <header>
+        <h1>MubinOFF</h1>
+        <p>Добро пожаловать на наш сайт</p>
+    </header>
+    <nav>
+        <div class="nav-button">
+            Электроника
+            <div class="dropdown">
+                <button onclick="openModal('phones')">Телефоны</button>
+                <button onclick="openModal('laptops')">Ноутбуки</button>
+                <button onclick="openModal('tablets')">Планшеты</button>
+                <button onclick="openModal('headphones')">Наушники</button>
+            </div>
+        </div>
+        <div class="nav-button">
+            Прайс
+            <div class="dropdown">
+                <button onclick="openModal('price1')">Замена и ремонт</button>
+                <button onclick="openModal('price2')">Програмные услуги</button>
+                <button onclick="openModal('price3')">Прочий ремонт</button>
+            </div>
+        </div>
+        <div class="nav-button">
+            Связь и энергия
+            <div class="dropdown">
+                <button onclick="openModal('energy1')">WiFi Роутеры</button>
+                <button onclick="openModal('energy2')">Усилители связи</button>
+                <button onclick="openModal('energy3')">Камеры видеонаблюдения</button>
+            </div>
+        </div>
+        <button class="nav-button" onclick="openModal('reviews')">Отзывы</button>
+        <button class="nav-button" onclick="openModal('discounts')">Скидки</button>
+        <div class="nav-button">
+            Прочие товары
+            <div class="dropdown">
+                <button onclick="openModal('other1')">Аксессуары</button>
+                <button onclick="openModal('other2')">Запчасти</button>
+                <button onclick="openModal('other3')">Инструменты</button>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <section class="welcome-section">
+            <h2>О MubinOFF</h2>
+            <p>Добро пожаловать в MubinOFF — ваш надежный магазин и мастерская электроники! Мы предлагаем широкий ассортимент товаров: от смартфонов и ноутбуков до аксессуаров и запчастей. Наши мастера выполняют ремонт любой сложности, гарантируя качество и скорость.</p>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>Продажа</h3>
+                    <p>Новейшие модели телефонов, ноутбуков и планшетов по доступным ценам.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Ремонт</h3>
+                    <p>Быстрый и качественный ремонт электроники с гарантией.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Поддержка</h3>
+                    <p>Консультации и помощь в выборе техники 24/7.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Для заказа:</h3>
+                    <p>Обращайтесь по номеру 119119929.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Способы оплат:</h3>
+                    <p>Оплата наличными или на карту DC.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 MubinOFF[ServiceDzhan]. Все права защищены.</p>
+        <div class="social-links">
+            <a href="https://t.me/+FqrMq6O5j9QzZDli" class="telegram-link" target="_blank">
+                <i class="fab fa-telegram-plane"></i>
+            </a>
+            <a href="tel:+992119119929" class="phone-link">
+                <i class="fas fa-phone"></i>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Модальные окна -->
+    <!-- Телефоны -->
+    <div id="phones" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('phones')">×</span>
+            <h2>Телефоны</h2>
+            <p>В MubinOFF вы найдете последние модели смартфонов от ведущих брендов. Мы также предлагаем услуги по ремонту: замена экранов, батарей, восстановление после воды и многое другое.</p>
+            <div class="phone-brands">
+                <button onclick="openModal('apple')">Apple</button>
+                <button onclick="openModal('samsung')">Samsung</button>
+                <button onclick="openModal('tecno')">Tecno</button>
+                <button onclick="openModal('xiaomi')">Xiaomi</button>
+                <button onclick="openModal('huawei')">Huawei</button>
+                <button onclick="openModal('infinix')">Infinix</button>
+                <button onclick="openModal('nokia')">Nokia</button>
+                <button onclick="openModal('realme')">Realme</button>
+            </div>
+        </div>
+    </div>
+    <div id="apple" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('apple')">×</span>
+            <h2>Apple</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>iPhone X</td>
+                        <td>5.8" OLED</td>
+                        <td>A11 Bionic</td>
+                        <td>256 ГБ</td>
+                        <td>2400TJS</td>
+                    </tr>
+                    <tr>
+                        <td>iPhone Xr</td>
+                        <td>6.1" OLED</td>
+                        <td>A12 Bionic</td>
+                        <td>256 ГБ</td>
+                        <td>2899TJS</td>
+                    </tr>
+                    <tr>
+                        <td>iPhone Xs</td>
+                        <td>5.8" OLED</td>
+                        <td>A12 Bionic</td>
+                        <td>256 ГБ</td>
+                        <td>2700TJS</td>
+                    </tr>
+                    <tr>
+                        <td>iPhone 11</td>
+                        <td>6.1" OLED</td>
+                        <td>A13 Bionic</td>
+                        <td>128 ГБ</td>
+                        <td>3000TJS</td>
+                    </tr>
+                    <tr>
+                        <td>iPhone 12</td>
+                        <td>6.1" OLED</td>
+                        <td>A14 Bionic</td>
+                        <td>128 ГБ</td>
+                        <td>4200TJS</td>
+                    </tr>
+                    <tr>
+                        <td>iPhone 13</td>
+                        <td>6.1" OLED</td>
+                        <td>A15 Bionic</td>
+                        <td>128 ГБ</td>
+                        <td>7700TJS</td>
+                    </tr>
+                    <tr>
+                        <td>iPhone 14</td>
+                        <td>6.1" OLED</td>
+                        <td>A15 Bionic</td>
+                        <td>256 ГБ</td>
+                        <td>8900TJS</td>
+                    </tr>
+                    <tr>
+                        <td>iPhone 15</td>
+                        <td>6.1" OLED</td>
+                        <td>A16 Bionic</td>
+                        <td>256 ГБ</td>
+                        <td>9900TJS</td>
+                    </tr>
+                    <tr>
+                        <td>iPhone 16 Pro Max</td>
+                        <td>6.9" OLED</td>
+                        <td>A18 Pro</td>
+                        <td>512 ГБ</td>
+                        <td>13500TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="samsung" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('samsung')">×</span>
+            <h2>Samsung</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Galaxy A12</td>
+                        <td>6.5" PLS TFT LCD</td>
+                        <td>MediaTec Helio P35</td>
+                        <td>32 ГБ</td>
+                        <td>1399TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Galaxy A15</td>
+                        <td>6.5" AMOLED</td>
+                        <td>MediaTec Helio G99</td>
+                        <td>128 ГБ</td>
+                        <td>2100TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Galaxy S21</td>
+                        <td>6.2" AMOLED</td>
+                        <td>Exynos 2100</td>
+                        <td>128 ГБ</td>
+                        <td>6999TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Galaxy S23</td>
+                        <td>6.1" AMOLED</td>
+                        <td>Snapdragon 8 Gen 2</td>
+                        <td>128 ГБ</td>
+                        <td>8900TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Galaxy A54</td>
+                        <td>6.4" AMOLED</td>
+                        <td>Exynos 1380</td>
+                        <td>128 ГБ</td>
+                        <td>4900TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Galaxy S25 Ultra</td>
+                        <td>6.8" AMOLED</td>
+                        <td>Snapdragon 8 Gen 4</td>
+                        <td>512 ГБ</td>
+                        <td>15000TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="tecno" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('tecno')">×</span>
+            <h2>Tecno</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Camon 30</td>
+                        <td>6.5" AMOLED</td>
+                        <td>--------</td>
+                        <td>256 ГБ</td>
+                        <td>2600TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Pova 5</td>
+                        <td>6.73" AMOLED</td>
+                        <td>--------</td>
+                        <td>256 ГБ</td>
+                        <td>2500TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Pova Neo 3</td>
+                        <td>---------</td>
+                        <td>MediaTec Helio G85</td>
+                        <td>128 ГБ</td>
+                        <td>2000TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Spark 30C</td>
+                        <td>---------</td>
+                        <td>MediaTec Helio G81</td>
+                        <td>128 ГБ</td>
+                        <td>1470TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Spark GO 1S</td>
+                        <td>6.67" IPS LCD</td>
+                        <td>MediaTec Helio G50</td>
+                        <td>128 ГБ</td>
+                        <td>1490TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Pop 9 4G</td>
+                        <td>6.67" IPS LSD</td>
+                        <td>Tiger T615</td>
+                        <td>128 ГБ</td>
+                        <td>1590TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="xiaomi" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('xiaomi')">×</span>
+            <h2>Xiaomi</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Xiaomi 14</td>
+                        <td>6.36" AMOLED</td>
+                        <td>Snapdragon 8 Gen 3</td>
+                        <td>256 ГБ</td>
+                        <td>8900TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Redmi Note 13</td>
+                        <td>6.67" AMOLED</td>
+                        <td>Dimensity 6080</td>
+                        <td>128 ГБ</td>
+                        <td>3500TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Xiaomi 15 Pro</td>
+                        <td>6.73" AMOLED</td>
+                        <td>Snapdragon 8 Gen 4</td>
+                        <td>512 ГБ</td>
+                        <td>10900TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Redmi 14C</td>
+                        <td>6.88" IPS LCD</td>
+                        <td>T7250</td>
+                        <td>128 ГБ</td>
+                        <td>1370TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Redmi Note 14 5G</td>
+                        <td>6.67" AMOLED</td>
+                        <td>Dimensity 7025</td>
+                        <td>256 ГБ</td>
+                        <td>2390TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Redmi 13</td>
+                        <td>6.79" IPS LCD</td>
+                        <td>Snapdragon 4 Gen 2</td>
+                        <td>128 ГБ</td>
+                        <td>1480TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="huawei" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('huawei')">×</span>
+            <h2>Huawei</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>P60</td>
+                        <td>6.67" OLED</td>
+                        <td>Snapdragon 8+ Gen 1</td>
+                        <td>256 ГБ</td>
+                        <td>7900TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Mate 50</td>
+                        <td>6.7" OLED</td>
+                        <td>Snapdragon 8+ Gen 1</td>
+                        <td>256 ГБ</td>
+                        <td>8900TJS</td>
+                    </tr>
+                    <tr>
+                        <td>P70 Pro</td>
+                        <td>6.8" OLED</td>
+                        <td>Kirin 9100</td>
+                        <td>512 ГБ</td>
+                        <td>10900TJS</td>
+                    </tr>
+                    <tr>
+                        <td>nova 13i</td>
+                        <td>6.7" IPS LCD</td>
+                        <td>Snapdragon 680</td>
+                        <td>128 ГБ</td>
+                        <td>1790TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Enjoy 70z</td>
+                        <td>6.75" IPS LCD</td>
+                        <td>KIRIN 710A</td>
+                        <td>128 ГБ</td>
+                        <td>1870TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="infinix" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('infinix')">×</span>
+            <h2>Infinix</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Note 30</td>
+                        <td>6.78" IPS LCD</td>
+                        <td>MediaTec Helio G99</td>
+                        <td>256 ГБ</td>
+                        <td>2700TJS</td>
+                    </tr>
+                    <tr>
+                        <td>HOT 30i</td>
+                        <td>6.56" IPS LCD</td>
+                        <td>Unisoc T606</td>
+                        <td>128 ГБ</td>
+                        <td>1600TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Smart 8</td>
+                        <td>6.6" IPS LCD</td>
+                        <td>Unisoc T606</td>
+                        <td>128 ГБ</td>
+                        <td>1500TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Smart 9 HD</td>
+                        <td>6.7" A-Si IPS LCD</td>
+                        <td>MediaTec Helio G50</td>
+                        <td>64 ГБ</td>
+                        <td>1270TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Note 40S</td>
+                        <td>6.78" AMOLED</td>
+                        <td>MediaTec Helio G99</td>
+                        <td>256 ГБ</td>
+                        <td>2790TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="nokia" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('nokia')">×</span>
+            <h2>Nokia</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>110(2023)</td>
+                        <td>-----</td>
+                        <td>-----</td>
+                        <td>-----</td>
+                        <td>550TJS</td>
+                    </tr>
+                    <tr>
+                        <td>2780 Flip</td>
+                        <td>2.7" 240*320pics</td>
+                        <td>Qualcom Snapdragon 215</td>
+                        <td>4 ГБ</td>
+                        <td>950TJS</td>
+                    </tr>
+                    <tr>
+                        <td>1.4</td>
+                        <td>6.52" 720*1520pics</td>
+                        <td>Qualcom Snapdragon 215</td>
+                        <td>64 ГБ</td>
+                        <td>1100TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="realme" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('realme')">×</span>
+            <h2>Realme</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GT5</td>
+                        <td>6.74" AMOLED</td>
+                        <td>Snapdragon 8 Gen 2</td>
+                        <td>256 ГБ</td>
+                        <td>6899TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Narzo 60</td>
+                        <td>6.6" AMOLED</td>
+                        <td>Dimensity 6020</td>
+                        <td>128 ГБ</td>
+                        <td>3399TJS</td>
+                    </tr>
+                    <tr>
+                        <td>GT7 Pro</td>
+                        <td>6.78" AMOLED</td>
+                        <td>Snapdragon 8 Gen 4</td>
+                        <td>512 ГБ</td>
+                        <td>8899TJS</td>
+                    </tr>
+                    <tr>
+                        <td>C63 5G</td>
+                        <td>6.67" IPS LCD</td>
+                        <td>Dimensity 6300</td>
+                        <td>256 ГБ</td>
+                        <td>1970TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Ноутбуки -->
+    <div id="laptops" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('laptops')">×</span>
+            <h2>Ноутбуки</h2>
+            <p>Продаем ноутбуки для работы, учебы и игр. Наши мастера помогут с апгрейдом (увеличение оперативной памяти, замена SSD) и ремонтом любой сложности.</p>
+            <div class="laptop-brands">
+                <button onclick="openModal('apple-laptop')">Apple</button>
+                <button onclick="openModal('dell')">Dell</button>
+                <button onclick="openModal('hp')">HP</button>
+                <button onclick="openModal('lenovo')">Lenovo</button>
+                <button onclick="openModal('asus')">Asus</button>
+                <button onclick="openModal('acer')">Acer</button>
+                <button onclick="openModal('msi')">MSI</button>
+            </div>
+        </div>
+    </div>
+    <div id="apple-laptop" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('apple-laptop')">×</span>
+            <h2>Apple</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>MacBook Air M1</td>
+                        <td>13.3" Retina</td>
+                        <td>M1</td>
+                        <td>256 ГБ SSD</td>
+                        <td>10900TJS</td>
+                    </tr>
+                    <tr>
+                        <td>MacBook Pro M2</td>
+                        <td>14.2" Liquid Retina</td>
+                        <td>M2 Pro</td>
+                        <td>512 ГБ SSD</td>
+                        <td>21900TJS</td>
+                    </tr>
+                    <tr>
+                        <td>MacBook Air M3</td>
+                        <td>15.3" Retina</td>
+                        <td>M3</td>
+                        <td>512 ГБ SSD</td>
+                        <td>16900TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="dell" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('dell')">×</span>
+            <h2>Dell</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>XPS 13</td>
+                        <td>13.4" OLED</td>
+                        <td>Intel i7-13700H</td>
+                        <td>512 ГБ SSD</td>
+                        <td>15600TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Inspiron 15</td>
+                        <td>15.6" FHD</td>
+                        <td>Intel i5-1335U</td>
+                        <td>256 ГБ SSD</td>
+                        <td>7700TJS</td>
+                    </tr>
+                    <tr>
+                        <td>XPS 16</td>
+                        <td>16.3" OLED</td>
+                        <td>Intel i9-14900HX</td>
+                        <td>1 ТБ SSD</td>
+                        <td>27600TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="hp" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('hp')">×</span>
+            <h2>HP</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pavilion 15</td>
+                        <td>15.6" FHD</td>
+                        <td>Intel i5-1335U</td>
+                        <td>256 ГБ SSD</td>
+                        <td>7200TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Spectre x360</td>
+                        <td>13.5" OLED</td>
+                        <td>Intel i7-13700H</td>
+                        <td>512 ГБ SSD</td>
+                        <td>16300TJS</td>
+                    </tr>
+                    <tr>
+                        <td>EliteBook 1050</td>
+                        <td>15.6" 4K</td>
+                        <td>Intel i7-13700H</td>
+                        <td>1 ТБ SSD</td>
+                        <td>22000TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="lenovo" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('lenovo')">×</span>
+            <h2>Lenovo</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ThinkPad X1</td>
+                        <td>14" WQHD</td>
+                        <td>Intel i7-13700H</td>
+                        <td>512 ГБ SSD</td>
+                        <td>18700TJS</td>
+                    </tr>
+                    <tr>
+                        <td>IdeaPad 5</td>
+                        <td>15.6" FHD</td>
+                        <td>AMD Ryzen 5 7530U</td>
+                        <td>256 ГБ SSD</td>
+                        <td>6700TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Yoga 9i</td>
+                        <td>14" OLED</td>
+                        <td>Intel i7-13700H</td>
+                        <td>1 ТБ SSD</td>
+                        <td>19800TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="asus" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('asus')">×</span>
+            <h2>Asus</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ROG Zephyrus</td>
+                        <td>16" QHD</td>
+                        <td>AMD Ryzen 9 7945HX</td>
+                        <td>1 ТБ SSD</td>
+                        <td>27800TJS</td>
+                    </tr>
+                    <tr>
+                        <td>ZenBook 14</td>
+                        <td>14" OLED</td>
+                        <td>Intel i7-13700H</td>
+                        <td>512 ГБ SSD</td>
+                        <td>14500TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Vivobook 15</td>
+                        <td>15.6" FHD</td>
+                        <td>Intel i5-1335U</td>
+                        <td>256 ГБ SSD</td>
+                        <td>7700TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="acer" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('acer')">×</span>
+            <h2>Acer</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Aspire 5</td>
+                        <td>15.6" FHD</td>
+                        <td>Intel i5-1335U</td>
+                        <td>256 ГБ SSD</td>
+                        <td>6700TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Nitro 5</td>
+                        <td>15.6" FHD</td>
+                        <td>AMD Ryzen 7 7735HS</td>
+                        <td>512 ГБ SSD</td>
+                        <td>12100TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Swift X 14</td>
+                        <td>14" WQXGA</td>
+                        <td>Intel i7-13700H</td>
+                        <td>512 ГБ SSD</td>
+                        <td>15500TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="msi" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('msi')">×</span>
+            <h2>MSI</h2>
+            <p>Ремонт: охлаждение от $30, экраны от $90.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Katana 15</td>
+                        <td>15.6" FHD</td>
+                        <td>Intel i7-13700H</td>
+                        <td>512 ГБ SSD</td>
+                        <td>15500TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Prestige 14</td>
+                        <td>14" FHD</td>
+                        <td>Intel i7-13700H</td>
+                        <td>512 ГБ SSD</td>
+                        <td>14200TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Creator Z17</td>
+                        <td>17" QHD</td>
+                        <td>Intel i9-14900HX</td>
+                        <td>1 ТБ SSD</td>
+                        <td>32500TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Планшеты -->
+    <div id="tablets" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('tablets')">×</span>
+            <h2>Планшеты</h2>
+            <p>Компактные и мощные планшеты для развлечений и работы. Ремонтируем экраны, батареи и программное обеспечение.</p>
+            <div class="tablet-brands">
+                <button onclick="openModal('apple-tablet')">Apple</button>
+                <button onclick="openModal('samsung-tablet')">Samsung</button>
+                <button onclick="openModal('huawei-tablet')">Huawei</button>
+                <button onclick="openModal('lenovo-tablet')">Lenovo</button>
+                <button onclick="openModal('xiaomi-tablet')">Xiaomi</button>
+                <button onclick="openModal('microsoft')">Microsoft</button>
+            </div>
+        </div>
+    </div>
+    <div id="apple-tablet" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('apple-tablet')">×</span>
+            <h2>Apple</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>iPad Air</td>
+                        <td>10.9" Liquid Retina</td>
+                        <td>M1</td>
+                        <td>64 ГБ</td>
+                        <td>6700TJS</td>
+                    </tr>
+                    <tr>
+                        <td>iPad Pro</td>
+                        <td>12.9" Liquid Retina XDR</td>
+                        <td>M2</td>
+                        <td>256 ГБ</td>
+                        <td>12100TJS</td>
+                    </tr>
+                    <tr>
+                        <td>iPad Mini</td>
+                        <td>8.3" Liquid Retina</td>
+                        <td>A15 Bionic</td>
+                        <td>64 ГБ</td>
+                        <td>5600TJS</td>
+                    </tr>
+                    <tr>
+                        <td>iPad 11 Pro</td>
+                        <td>11" Liquid Retina</td>
+                        <td>M3</td>
+                        <td>512 ГБ</td>
+                        <td>11000TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="samsung-tablet" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('samsung-tablet')">×</span>
+            <h2>Samsung</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Galaxy Tab S9</td>
+                        <td>11" AMOLED</td>
+                        <td>Snapdragon 8 Gen 2</td>
+                        <td>128 ГБ</td>
+                        <td>8700TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Galaxy Tab A8</td>
+                        <td>10.5" TFT</td>
+                        <td>Unisoc T618</td>
+                        <td>64 ГБ</td>
+                        <td>2700TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Galaxy Tab S10+</td>
+                        <td>12.4" AMOLED</td>
+                        <td>Snapdragon 8 Gen 3</td>
+                        <td>256 ГБ</td>
+                        <td>11000TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="huawei-tablet" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('huawei-tablet')">×</span>
+            <h2>Huawei</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>MatePad 11</td>
+                        <td>10.95" IPS</td>
+                        <td>Snapdragon 865</td>
+                        <td>128 ГБ</td>
+                        <td>4500TJS</td>
+                    </tr>
+                    <tr>
+                        <td>MatePad 12</td>
+                        <td>12.6" OLED</td>
+                        <td>Kirin 9000E</td>
+                        <td>256 ГБ</td>
+                        <td>6700TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="lenovo-tablet" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('lenovo-tablet')">×</span>
+            <h2>Lenovo</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tab M10</td>
+                        <td>10.1" IPS</td>
+                        <td>MediaTek Helio P22T</td>
+                        <td>64 ГБ</td>
+                        <td>2300TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Tab P11</td>
+                        <td>11" IPS</td>
+                        <td>Snapdragon 662</td>
+                        <td>128 ГБ</td>
+                        <td>3900TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Tab M11 Pro</td>
+                        <td>11.2" OLED</td>
+                        <td>Snapdragon 730</td>
+                        <td>128 ГБ</td>
+                        <td>5700TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="xiaomi-tablet" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('xiaomi-tablet')">×</span>
+            <h2>Xiaomi</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pad 6</td>
+                        <td>11" IPS</td>
+                        <td>Snapdragon 870</td>
+                        <td>128 ГБ</td>
+                        <td>4500TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Pad 6S Pro</td>
+                        <td>12.4" AMOLED</td>
+                        <td>Snapdragon 8 Gen 2</td>
+                        <td>256 ГБ</td>
+                        <td>6700TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="microsoft" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('microsoft')">×</span>
+            <h2>Microsoft</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Экран</th>
+                        <th>Процессор</th>
+                        <th>Память</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Surface Pro</td>
+                        <td>13" PixelSense</td>
+                        <td>Intel i7-1355U</td>
+                        <td>512 ГБ SSD</td>
+                        <td>16400TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Surface Go</td>
+                        <td>10.5" PixelSense</td>
+                        <td>Intel Pentium Gold</td>
+                        <td>128 ГБ SSD</td>
+                        <td>6100TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Surface Pro 11</td>
+                        <td>13" OLED</td>
+                        <td>Snapdragon X Elite</td>
+                        <td>1 ТБ SSD</td>
+                        <td>19800TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Наушники -->
+    <div id="headphones" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('headphones')">×</span>
+            <h2>Наушники</h2>
+            <p>Беспроводные и проводные наушники с отличным звуком. Чиним динамики, кабели и Bluetooth-модули.</p>
+            <div class="headphone-brands">
+                <button onclick="openModal('apple-headphones')">Apple</button>
+                <button onclick="openModal('sony')">Sony</button>
+                <button onclick="openModal('jbl')">JBL</button>
+                <button onclick="openModal('bose')">Bose</button>
+                <button onclick="openModal('samsung-headphones')">Samsung</button>
+                <button onclick="openModal('anker')">Anker</button>
+            </div>
+        </div>
+    </div>
+    <div id="apple-headphones" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('apple-headphones')">×</span>
+            <h2>Apple</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Тип</th>
+                        <th>Подключение</th>
+                        <th>Время работы</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AirPods</td>
+                        <td>Внутриканальные</td>
+                        <td>Bluetooth</td>
+                        <td>5 ч</td>
+                    </tr>
+                    <tr>
+                        <td>AirPods Pro</td>
+                        <td>Внутриканальные</td>
+                        <td>Bluetooth</td>
+                        <td>6 ч</td>
+                    </tr>
+                    <tr>
+                        <td>AirPods 4</td>
+                        <td>Внутриканальные</td>
+                        <td>Bluetooth</td>
+                        <td>5 ч</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="sony" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('sony')">×</span>
+            <h2>Sony</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Тип</th>
+                        <th>Подключение</th>
+                        <th>Время работы</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>WH-1000XM5</td>
+                        <td>Накладные</td>
+                        <td>Bluetooth</td>
+                        <td>30 ч</td>
+                    </tr>
+                    <tr>
+                        <td>WF-1000XM4</td>
+                        <td>Внутриканальные</td>
+                        <td>Bluetooth</td>
+                        <td>8 ч</td>
+                    </tr>
+                    <tr>
+                        <td>WH-CH720N</td>
+                        <td>Накладные</td>
+                        <td>Bluetooth</td>
+                        <td>35 ч</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="jbl" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('jbl')">×</span>
+            <h2>JBL</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Тип</th>
+                        <th>Подключение</th>
+                        <th>Время работы</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tune 510BT</td>
+                        <td>Накладные</td>
+                        <td>Bluetooth</td>
+                        <td>40 ч</td>
+                    </tr>
+                    <tr>
+                        <td>Live 460NC</td>
+                        <td>Накладные</td>
+                        <td>Bluetooth</td>
+                        <td>50 ч</td>
+                    </tr>
+                    <tr>
+                        <td>Live Pro 3</td>
+                        <td>Внутриканальные</td>
+                        <td>Bluetooth</td>
+                        <td>10 ч</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="bose" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('bose')">×</span>
+            <h2>Bose</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Тип</th>
+                        <th>Подключение</th>
+                        <th>Время работы</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>QuietComfort</td>
+                        <td>Накладные</td>
+                        <td>Bluetooth</td>
+                        <td>24 ч</td>
+                    </tr>
+                    <tr>
+                        <td>700</td>
+                        <td>Накладные</td>
+                        <td>Bluetooth</td>
+                        <td>20 ч</td>
+                    </tr>
+                    <tr>
+                        <td>QuietComfort Ultra</td>
+                        <td>Внутриканальные</td>
+                        <td>Bluetooth</td>
+                        <td>6 ч</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="samsung-headphones" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('samsung-headphones')">×</span>
+            <h2>Samsung</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Тип</th>
+                        <th>Подключение</th>
+                        <th>Время работы</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Galaxy Buds 2</td>
+                        <td>Внутриканальные</td>
+                        <td>Bluetooth</td>
+                        <td>7.5 ч</td>
+                    </tr>
+                    <tr>
+                        <td>Galaxy Buds Pro</td>
+                        <td>Внутриканальные</td>
+                        <td>Bluetooth</td>
+                        <td>5 ч</td>
+                    </tr>
+                    <tr>
+                        <td>Galaxy Buds 4</td>
+                        <td>Внутриканальные</td>
+                        <td>Bluetooth</td>
+                        <td>8 ч</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="anker" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('anker')">×</span>
+            <h2>Anker</h2>
+            <p>Все модели под заказ.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Тип</th>
+                        <th>Подключение</th>
+                        <th>Время работы</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Soundcore Liberty</td>
+                        <td>Внутриканальные</td>
+                        <td>Bluetooth</td>
+                        <td>8 ч</td>
+                    </tr>
+                    <tr>
+                        <td>Liberty 4 NC</td>
+                        <td>Внутриканальные</td>
+                        <td>Bluetooth</td>
+                        <td>10 ч</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Прайс-листы -->
+    <div id="price1" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('price1')">×</span>
+            <h2>Замена и ремонт: Замена деталей.</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Услуга</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Замена экрана|LCD</td>
+                        <td>от 20TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Замена батареи|АКБ</td>
+                        <td>от 10TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Ремонт камеры</td>
+                        <td>от 25TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Замена гнезда</td>
+                        <td>от 20TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Подробности уточняйте в Telegram!</p>
+        </div>
+    </div>
+    <div id="price2" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('price2')">×</span>
+            <h2>Програмные услуги: Услуги програмиста.</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Услуга</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Регистрация Applr ID</td>
+                        <td>от 50TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Регистрация Google</td>
+                        <td>от 5TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Прошивка|FRP|Обход АКК</td>
+                        <td>от 20TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Обновлени ПО</td>
+                        <td>от 10TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Обновлени СберБанк</td>
+                        <td>от 20TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Обновлени приложений</td>
+                        <td> 3*1TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Свяжитесь для консультации!</p>
+        </div>
+    </div>
+    <div id="price3" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('price3')">×</span>
+            <h2>Прочий ремонт: РЕМОНТ</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Услуга</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Крупный ремонт</td>
+                        <td>от 15TJS</td>
+                    </tr>
+                    <tr>
+                        <td>Мелкий ремонт</td>
+                        <td>от 1TJS</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Уточняйте наличие в мастерской.</p>
+        </div>
+    </div>
+    <!-- Остальные модальные окна -->
+    <div id="energy1" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('energy1')">×</span>
+            <h2>WiFi Роутеры</h2>
+            <p>Лучшее качество.</p>
+        </div>
+    </div>
+    <div id="energy2" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('energy2')">×</span>
+            <h2>Усилители связи</h2>
+            <p>Оригинальные и сертифицированные Услители Связи.</p>
+        </div>
+    </div>
+    <div id="energy3" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('energy3')">×</span>
+            <h2>Камеры видеонаблюдения</h2>
+            <p>4К-видеонаблюдение.</p>
+        </div>
+    </div>
+    <div id="reviews" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('reviews')">×</span>
+            <h2>Отзывы</h2>
+            <div class="reviews-list" id="reviews-list">
+                <div>Алишер, 2025: MubinOFF починил мой телефон за 2 часа!</div>
+            </div>
+        </div>
+    </div>
+    <div id="discounts" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('discounts')">×</span>
+            <h2>Скидки</h2>
+            <p>Наблюдать за акциями вы можете в нашем Telegram канале.</p>
+        </div>
+    </div>
+    <div id="other1" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('other1')">×</span>
+            <h2>Аксессуары</h2>
+            <p>Чехлы, защитные стекла, держатели для телефонов и планшетов. Все для защиты вашей техники.</p>
+        </div>
+    </div>
+    <div id="other2" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('other2')">×</span>
+            <h2>Запчасти</h2>
+            <p>Оригинальные запчасти для ремонта: экраны, батареи, разъемы. Поставка под заказ.</p>
+        </div>
+    </div>
+    <div id="other3" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('other3')">×</span>
+            <h2>Инструменты</h2>
+            <p>Профессиональные инструменты для ремонта электроники. Продажа и аренда.</p>
+        </div>
+    </div>
+    <!-- Модальное окно для формы отзыва -->
+    <div id="review-form" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('review-form')">×</span>
+            <h2>Оставить отзыв</h2>
+            <form class="review-form" id="reviewForm">
+                <input type="text" id="reviewName" placeholder="Ваше имя" required minlength="2" maxlength="50">
+                <textarea id="reviewText" placeholder="Ваш отзыв" rows="5" required minlength="10" maxlength="500"></textarea>
+                <button type="submit">Отправить</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Переключение темы
+        function toggleTheme() {
+            const body = document.body;
+            const button = document.querySelector('.theme-toggle');
+            if (body.classList.contains('light-theme')) {
+                body.classList.replace('light-theme', 'dark-theme');
+                button.textContent = 'Светлая тема';
+            } else {
+                body.classList.replace('dark-theme', 'light-theme');
+                button.textContent = 'Темная тема';
+            }
+        }
+
+        // Открытие модального окна
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            modal.style.display = 'flex';
+            modal.focus();
+        }
+
+        // Закрытие модального окна
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            modal.style.display = 'none';
+        }
+
+        // Закрытие модального окна при клике вне контента
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // Обработка клавиши Escape для закрытия модалок
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+        });
+
+        // Загрузка отзывов при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            loadReviews();
+        });
+
+        // Обработка отправки формы отзыва
+        document.getElementById('reviewForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('reviewName').value.trim();
+            const text = document.getElementById('reviewText').value.trim();
+            
+            // Проверка длины ввода
+            if (name.length < 2 || name.length > 50) {
+                alert('Имя должно содержать от 2 до 50 символов');
+                return;
+            }
+            if (text.length < 10 || text.length > 500) {
+                alert('Отзыв должен содержать от 10 до 500 символов');
+                return;
+            }
+
+            const review = `${name}, ${new Date().getFullYear()}: ${text}`;
+            saveReview(review);
+            addReviewToList(review);
+            document.getElementById('reviewForm').reset();
+            closeModal('review-form');
+        });
+
+        // Сохранение отзыва в localStorage
+        function saveReview(review) {
+            let reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+            reviews.push(review);
+            localStorage.setItem('reviews', JSON.stringify(reviews));
+        }
+
+        // Загрузка отзывов из localStorage
+        function loadReviews() {
+            let reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+            const reviewsList = document.getElementById('reviews-list');
+            reviewsList.innerHTML = '<div>Алишер, 2025: MubinOFF починил мой телефон за 2 часа!</div>';
+            reviews.forEach(review => {
+                addReviewToList(review);
+            });
+        }
+
+        // Добавление отзыва в DOM
+        function addReviewToList(review) {
+            const reviewsList = document.getElementById('reviews-list');
+            const reviewElement = document.createElement('div');
+            reviewElement.textContent = review;
+
+reviewsList.appendChild(reviewElement);
+        }
+    </script>
+</body>
+</html>
